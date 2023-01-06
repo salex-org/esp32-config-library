@@ -158,21 +158,25 @@ void setup() {
 
 WebServer webServer(80);
 
+String configStyle() {
+	return "body { background-color: cyan; }";
+}
+
 ConfigServer configServer({
-  ConfigNamespace("General", "general", {
-    ConfigEntry("NTP Hostname", TEXT, "ntp-host", "pool.ntp.org"),
-    ConfigEntry("Display Timeout (ms)", INTEGER, "display-timeout", "60000")
-  }),
-  ConfigNamespace("WiFi", "wifi", {
-    ConfigEntry("SSID", TEXT, "ssid"),
-    ConfigEntry("Password", PASSWORD, "password")
-  }),
-  ConfigNamespace("MQTT", "mqtt", {
-    ConfigEntry("Hostname", TEXT, "hostname"),
-    ConfigEntry("Username", TEXT, "username"),
-    ConfigEntry("Password", PASSWORD, "password")
-  })
-});
+    ConfigNamespace("General", "general", {
+      ConfigEntry("NTP Hostname", TEXT, "ntp-host", "pool.ntp.org"),
+      ConfigEntry("Display Timeout (ms)", INTEGER, "display-timeout", "60000")
+    }),
+    ConfigNamespace("WiFi", "wifi", {
+      ConfigEntry("SSID", TEXT, "ssid"),
+      ConfigEntry("Password", PASSWORD, "password")
+    }),
+    ConfigNamespace("MQTT", "mqtt", {
+      ConfigEntry("Hostname", TEXT, "hostname"),
+      ConfigEntry("Username", TEXT, "username"),
+      ConfigEntry("Password", PASSWORD, "password")
+    })
+  }, configStyle);
 
 void handle_config_page_request() {
   webServer.send(200, "text/html", configServer.html().c_str());
@@ -189,10 +193,13 @@ void handle_config_update_request() {
   }
 }
 
+ConfigCli CLI;
+
 void setup() {
   Serial.begin(115200);
   Serial.println();
-  
+  CLI.begin(&Serial);
+
   configServer.load();
 
   WiFi.softAP("salex.org Smart Home Agent", "chicago2011");

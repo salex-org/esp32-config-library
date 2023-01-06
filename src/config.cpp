@@ -116,12 +116,19 @@ String ConfigNamespace::html() {
     return content;
 }
 
-ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces) {
+ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)() = 0) {
     this->namespaces = namespaces;
+	this->styleHandler = styleHandler;
 }
 
 String ConfigServer::html() {
-  String content = "<html><head><title>Samrt Home Agent</title></head><body><h1>Configuration</h1>";
+  String content = "<html><head><title>Samrt Home Agent</title>";
+  if(this->styleHandler != 0) {
+    content.concat("<style>");
+    content.concat(this->styleHandler());
+    content.concat("</style>");
+  }
+  content.concat("</head><body><h1>Configuration</h1>");
   content.concat("<form action=\"/\" method=\"post\">");
   for(int i = 0 ; i < this->namespaces.size() ; i++) {
     content.concat(this->namespaces[i].html());
@@ -135,4 +142,9 @@ void ConfigServer::load() {
     for(int i = 0 ; i < this->namespaces.size() ; i++) {
         this->namespaces[i].load();
     }
+}
+
+void ConfigCli::begin(Stream *console) {
+	this->console = console;
+	this->console->printf("Config CLI started\n");
 }

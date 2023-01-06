@@ -43,10 +43,19 @@ class ConfigNamespace {
 class ConfigServer {
     private:
         std::vector<ConfigNamespace> namespaces;
+		String (*styleHandler)();
     public:
-        ConfigServer(std::vector<ConfigNamespace> namespaces);
+        ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)());
         void load();
         String html();
+};
+
+class ConfigCli {
+	private:
+		Stream *console;
+	public:
+		ConfigCli() {};
+		void begin(Stream *console);
 };
 
 #endif
