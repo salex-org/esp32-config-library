@@ -176,7 +176,7 @@ ConfigServer configServer({
       ConfigEntry("Username", TEXT, "username"),
       ConfigEntry("Password", PASSWORD, "password")
     })
-  }, configStyle);
+  }, &configStyle);
 
 void handle_config_page_request() {
   webServer.send(200, "text/html", configServer.html().c_str());
