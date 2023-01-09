@@ -1,6 +1,6 @@
 {
 	"name": "ESP32ConfigLibrary",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "An easy to use and extensible library for managing preferences",
 	"keywords": "esp32, esp8266, preferences, config",
 	"repository":
@@ -27,7 +27,7 @@
 	"examples": [
 		{
 			"name": "CLI",
-			"base": "./lib/esp32_config_library/examples/cli",
+			"base": "examples/cli",
 			"files": [
 				"cli.cpp",
 				"platformio.ini"
@@ -35,7 +35,7 @@
 		},
 		{
 			"name": "Server",
-			"base": "./lib/esp32_config_library/examples/server",
+			"base": "examples/server",
 			"files": [
 				"server.cpp"
 			]
