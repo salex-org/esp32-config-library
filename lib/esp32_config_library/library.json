@@ -1,22 +1,27 @@
 {
-    "name": "ESP32ConfigLibrary",
-    "keywords": "esp32, esp8266, preferences, config",
-    "description": "An easy to use and extensible config manager for the ESP32 and ESP8266",
-    "authors": [
-        {
-            "name": "salex-org",
-            "url": "https://github.com/salex-org"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/salex-org/esp32-config-library.git"
-    },
+	"name": "ESP32ConfigLibrary",
+	"version": "0.0.1",
+	"description": "An easy to use and extensible library for managing preferences",
+	"keywords": "esp32, esp8266, preferences, config",
+	"repository":
+	{
+	  "type": "git",
+	  "url": "https://github.com/salex-org/esp32-config-library.git"
+	},
+	"authors":
+	[
+	  {
+		"name": "Sascha Gärtner",
+		"email": "sascha.gaertner@salex.org",
+		"maintainer": true
+	  }
+	],
+	"license": "MIT",
+	"homepage": "https://github.com/salex-org",
+	"frameworks": "espressif32",
+	"platforms": "arduino",
     "dependencies": [],
     "headers": [
         "./lib/esp32_config_library/src/config.hpp"
-    ],
-    "version": "1.0.0",
-    "frameworks": "arduino",
-    "platforms": "espressif32"
-}
+    ]
+  }

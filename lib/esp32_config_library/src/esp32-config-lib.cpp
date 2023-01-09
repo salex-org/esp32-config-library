@@ -1,4 +1,4 @@
-#include "config.hpp"
+#include "esp32-config-lib.hpp"
 
 ConfigEntry::ConfigEntry(String title, ConfigEntryType type, String key)
 {
