@@ -1,14 +1,5 @@
 #include "esp32-config-lib.hpp"
 
-ConfigEntry::ConfigEntry(String title, ConfigEntryType type, String key)
-{
-    this->title = title;
-    this->type = type;
-    this->key = key;
-    this->value = "";
-    this->defaultValue = "";
-}
-
 ConfigEntry::ConfigEntry(String title, ConfigEntryType type, String key, String defaultValue)
 {
     this->title = title;
@@ -143,10 +134,32 @@ String ConfigNamespace::html()
     return content;
 }
 
-ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)() = 0)
+ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)(), int serverPort)
 {
     this->namespaces = namespaces;
     this->styleHandler = styleHandler;
+	this->serverPort = serverPort;
+}
+
+void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
+	load();
+
+//	this->webServer = &WebServer(serverPort);
+//	this->webServer.on("/", HTTP_GET, handle_config_page_request);
+//	this->webServer.on("/", HTTP_POST, handle_config_update_request);
+
+
+  WiFi.softAP("salex.org Smart Home Agent", "chicago2011");
+  WiFi.softAPConfig(IPAddress(192, 168, 10, 1), IPAddress(192, 168, 10, 1), IPAddress(255, 255, 255, 0));
+  Serial.println("WiFi access point started");
+  delay(100); // Wait 0.1 seconds for the wifi to be up and running
+
+  this->webServer->begin();
+
+}
+
+void ConfigServer::loop() {
+	this->webServer->handleClient();
 }
 
 String ConfigServer::html()
@@ -177,8 +190,24 @@ void ConfigServer::load()
     }
 }
 
-void ConfigCli::begin(Stream *console)
+/*
+void handle_config_page_request()
 {
-    this->console = console;
-    this->console->printf("Config CLI started\n");
+  webServer.send(200, "text/html", configServer.html().c_str());
 }
+
+void handle_config_update_request()
+{
+  if (webServer.hasArg("general.timeserver"))
+  {
+    String timeserver = webServer.arg("general.timeserver").c_str();
+    Serial.printf("Updating configuration, new timeserver value is '%s'\n", timeserver);
+    webServer.send(201, "text/html", configServer.html().c_str());
+  }
+  else
+  {
+    Serial.println("ERROR: Received post call without data");
+    webServer.send(400, "text/html", "missing data");
+  }
+}
+*/
