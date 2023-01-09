@@ -1,7 +1,7 @@
 {
 	"name": "ESP32ConfigLibrary",
-	"version": "0.0.3",
-	"description": "An easy to use and extensible library for managing preferences",
+	"version": "0.0.4",
+	"description": "An easy to use and extensible library for managing preferences. WARNING: This library is currently under development and not yet functional. A first functional version will appear here by the end of January 2023.",
 	"keywords": "esp32, esp8266, preferences, config",
 	"repository":
 	{
@@ -21,8 +21,8 @@
 	"platforms": "espressif32",
 	"frameworks": "arduino",
 	"headers": [
-        "./lib/esp32_config_library/src/esp32-config-lib.hpp",
-        "./lib/esp32_config_library/src/esp32-config-lib.h"
+        "esp32-config-lib.hpp",
+        "esp32-config-lib.h"
     ],
 	"examples": [
 		{

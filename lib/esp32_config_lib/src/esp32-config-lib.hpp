@@ -53,7 +53,9 @@ private:
 	int serverPort;
 	WebServer *webServer;
 	void load();
-	String html();
+	String create_html();
+	void handle_get_request();
+	void handle_post_request();
 public:
 	ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)() = 0, int port = 80);
 	void begin(std::string ssid = "ESP32 Config Server", std::string password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));

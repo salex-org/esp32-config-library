@@ -142,27 +142,27 @@ ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces, String (*sty
 }
 
 void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
+	// Load preference value
 	load();
 
-//	this->webServer = &WebServer(serverPort);
-//	this->webServer.on("/", HTTP_GET, handle_config_page_request);
-//	this->webServer.on("/", HTTP_POST, handle_config_update_request);
+	// Start WiFi soft access point
+	WiFi.softAP(ssid.c_str(), "chicago2011");
+	WiFi.softAPConfig(ip, ip, IPAddress(255, 255, 255, 0));
+	Serial.println("WiFi access point started");
+	delay(100); // Wait 0.1 seconds for the wifi to be up and running
 
-
-  WiFi.softAP("salex.org Smart Home Agent", "chicago2011");
-  WiFi.softAPConfig(IPAddress(192, 168, 10, 1), IPAddress(192, 168, 10, 1), IPAddress(255, 255, 255, 0));
-  Serial.println("WiFi access point started");
-  delay(100); // Wait 0.1 seconds for the wifi to be up and running
-
-  this->webServer->begin();
-
+	// Start web server
+	this->webServer = &WebServer(serverPort);
+	this->webServer->on("/", HTTP_GET, handle_get_request);
+	this->webServer->on("/", HTTP_POST, handle_post_request);
+	this->webServer->begin();
 }
 
 void ConfigServer::loop() {
 	this->webServer->handleClient();
 }
 
-String ConfigServer::html()
+String ConfigServer::create_html()
 {
     String content = "<html><head><title>Samrt Home Agent</title>";
     if (this->styleHandler != 0)
@@ -190,24 +190,22 @@ void ConfigServer::load()
     }
 }
 
-/*
-void handle_config_page_request()
+void ConfigServer::handle_get_request()
 {
-  webServer.send(200, "text/html", configServer.html().c_str());
+	this->webServer->send(200, "text/html", create_html().c_str());
 }
 
-void handle_config_update_request()
+void ConfigServer::handle_post_request()
 {
-  if (webServer.hasArg("general.timeserver"))
+  if (this->webServer->hasArg("general.timeserver"))
   {
-    String timeserver = webServer.arg("general.timeserver").c_str();
+    String timeserver = this->webServer->arg("general.timeserver").c_str();
     Serial.printf("Updating configuration, new timeserver value is '%s'\n", timeserver);
-    webServer.send(201, "text/html", configServer.html().c_str());
+    this->webServer->send(201, "text/html", this->create_html().c_str());
   }
   else
   {
     Serial.println("ERROR: Received post call without data");
-    webServer.send(400, "text/html", "missing data");
+    this->webServer->send(400, "text/html", "missing data");
   }
 }
-*/
