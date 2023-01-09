@@ -1,17 +1,17 @@
-# name: Release
-# on:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   release:
-#     name: Release
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v2
-#         with:
-#           fetch-depth: 0
+name: Create and publish a release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number to release'
+        required: true
+jobs:
+  publish:
+    name: Create and publish a release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 #       - name: Setup node
 #         uses: actions/setup-node@v3
 #         with:
