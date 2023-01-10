@@ -152,14 +152,13 @@ void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
 	delay(100); // Wait 0.1 seconds for the wifi to be up and running
 
 	// Start web server
-	this->webServer = &WebServer(serverPort);
-	this->webServer->on("/", HTTP_GET, handle_get_request);
-	this->webServer->on("/", HTTP_POST, handle_post_request);
-	this->webServer->begin();
+	this->webServer.on("/", HTTP_GET, std::bind(&ConfigServer::handle_get_request, this));
+	this->webServer.on("/", HTTP_POST, std::bind(&ConfigServer::handle_post_request, this));
+	this->webServer.begin(serverPort);
 }
 
 void ConfigServer::loop() {
-	this->webServer->handleClient();
+	this->webServer.handleClient();
 }
 
 String ConfigServer::create_html()
@@ -192,20 +191,20 @@ void ConfigServer::load()
 
 void ConfigServer::handle_get_request()
 {
-	this->webServer->send(200, "text/html", create_html().c_str());
+	this->webServer.send(200, "text/html", create_html().c_str());
 }
 
 void ConfigServer::handle_post_request()
 {
-  if (this->webServer->hasArg("general.timeserver"))
+  if (this->webServer.hasArg("general.timeserver"))
   {
-    String timeserver = this->webServer->arg("general.timeserver").c_str();
+    String timeserver = this->webServer.arg("general.timeserver").c_str();
     Serial.printf("Updating configuration, new timeserver value is '%s'\n", timeserver);
-    this->webServer->send(201, "text/html", this->create_html().c_str());
+    this->webServer.send(201, "text/html", this->create_html().c_str());
   }
   else
   {
     Serial.println("ERROR: Received post call without data");
-    this->webServer->send(400, "text/html", "missing data");
+    this->webServer.send(400, "text/html", "missing data");
   }
 }

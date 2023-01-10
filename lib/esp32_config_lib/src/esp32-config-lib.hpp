@@ -51,7 +51,7 @@ private:
 	std::vector<ConfigNamespace> namespaces;
 	String (*styleHandler)();
 	int serverPort;
-	WebServer *webServer;
+	WebServer webServer;
 	void load();
 	String create_html();
 	void handle_get_request();
