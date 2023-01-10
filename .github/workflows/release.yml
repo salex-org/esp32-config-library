@@ -12,32 +12,59 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-#       - name: Setup node
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 18
-#       - run: npm install -g semantic-release@v19.0.5
-#       - run: npm install -g @semantic-release/exec
-#       - run: npm install -g @semantic-release/git
-#       - name: Cache pip
-#         uses: actions/cache@v2
-#         with:
-#           path: ~/.cache/pip
-#           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-#           restore-keys: ${{ runner.os }}-pip-
-#       - name: Cache PlatformIO
-#         uses: actions/cache@v2
-#         with:
-#           path: ~/.platformio
-#           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-#       - name: Set up Python
-#         uses: actions/setup-python@v2
-#       - name: Install PlatformIO
-#         run: |
-#           python -m pip install --upgrade pip
-#           pip install --upgrade platformio
-#       - name: Release
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           PLATFORMIO_AUTH_TOKEN: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
-#         run: semantic-release
+
+      - name: Cache pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Cache PlatformIO
+        uses: actions/cache@v2
+        with:
+          path: ~/.platformio
+          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade platformio
+
+      - name: Set Version in library.json
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: lib/ecp32_config_lib/library.json
+          field: version
+          value: ${{ github.event.inputs.version }}
+
+      - mame: Create tag
+        run: |
+          git config --global user.email "buildmanager@salex.org"
+          git config --global user.name "Bob the Builder"
+          git lib/ecp32_config_lib/library.json
+          git commit -m "updating version to ${{ github.event.inputs.version }} in library.json"
+          git tag -a v${{ github.event.inputs.version }} -m "tagging version ${{ github.event.inputs.version }}"
+          git push --tags
+
+      - name: Publish library
+        run: |
+          pio package publish --owner salex-org --type library --notify --no-interactive lib/ecp32_config_lib
+        env:
+          PLATFORMIO_AUTH_TOKEN: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          release_name: Release v${{ github.event.inputs.version }}
+          body: |
+            Release v${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
