@@ -41,6 +41,12 @@ jobs:
           field: version
           value: ${{ github.event.inputs.version }}
 
+      - name: Publish library
+        run: |
+          pio package publish --owner salex-org --type library --notify --no-interactive lib/ecp32_config_lib
+        env:
+          PLATFORMIO_AUTH_TOKEN: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
+
       - mame: Create tag
         run: |
           git config --global user.email "buildmanager@salex.org"
@@ -49,12 +55,6 @@ jobs:
           git commit -m "updating version to ${{ github.event.inputs.version }} in library.json"
           git tag -a v${{ github.event.inputs.version }} -m "tagging version ${{ github.event.inputs.version }}"
           git push --tags
-
-      - name: Publish library
-        run: |
-          pio package publish --owner salex-org --type library --notify --no-interactive lib/ecp32_config_lib
-        env:
-          PLATFORMIO_AUTH_TOKEN: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
 
       - name: Create Release
         id: create_release
