@@ -1,6 +1,6 @@
 {
 	"name": "ESP32ConfigLibrary",
-	"version": "0.0.5",
+	"version": "",
 	"description": "An easy to use and extensible library for managing preferences.",
 	"keywords": "esp32, esp8266, preferences, config",
 	"repository":
