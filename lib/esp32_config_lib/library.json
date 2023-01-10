@@ -1,7 +1,7 @@
 {
 	"name": "ESP32ConfigLibrary",
-	"version": "0.0.4",
-	"description": "An easy to use and extensible library for managing preferences. WARNING: This library is currently under development and not yet functional. A first functional version will appear here by the end of January 2023.",
+	"version": "0.0.5",
+	"description": "An easy to use and extensible library for managing preferences.",
 	"keywords": "esp32, esp8266, preferences, config",
 	"repository":
 	{
