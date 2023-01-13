@@ -146,7 +146,7 @@ void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
 	load();
 
 	// Start WiFi soft access point
-	WiFi.softAP(ssid.c_str(), "chicago2011");
+	WiFi.softAP(ssid.c_str(), password.c_str());
 	WiFi.softAPConfig(ip, ip, IPAddress(255, 255, 255, 0));
 	Serial.println("WiFi access point started");
 	delay(100); // Wait 0.1 seconds for the wifi to be up and running
