@@ -1,6 +1,6 @@
 #include "esp32-config-lib.hpp"
 
-ConfigEntry::ConfigEntry(String title, ConfigEntryType type, String key, String defaultValue)
+esp32config::Entry::Entry(String title, esp32config::EntryType type, String key, String defaultValue)
 {
     this->title = title;
     this->type = type;
@@ -9,7 +9,7 @@ ConfigEntry::ConfigEntry(String title, ConfigEntryType type, String key, String 
     this->defaultValue = defaultValue;
 }
 
-void ConfigEntry::update(String key, String value)
+void esp32config::Entry::update(String key, String value)
 {
     if (this->key == key)
     {
@@ -17,7 +17,7 @@ void ConfigEntry::update(String key, String value)
     }
 }
 
-void ConfigEntry::save(Preferences *prefs)
+void esp32config::Entry::save(Preferences *prefs)
 {
     switch (this->type)
     {
@@ -31,7 +31,7 @@ void ConfigEntry::save(Preferences *prefs)
     }
 }
 
-void ConfigEntry::load(Preferences *prefs)
+void esp32config::Entry::load(Preferences *prefs)
 {
     if (prefs->isKey(this->key.c_str()))
     {
@@ -52,7 +52,7 @@ void ConfigEntry::load(Preferences *prefs)
     }
 }
 
-String ConfigEntry::html(String ns)
+String esp32config::Entry::html(String ns)
 {
     String content = "<tr><td>";
     content.concat(this->title);
@@ -68,14 +68,14 @@ String ConfigEntry::html(String ns)
     return content;
 }
 
-ConfigNamespace::ConfigNamespace(String title, String name, std::vector<ConfigEntry> entries)
+esp32config::Namespace::Namespace(String title, String name, std::vector<esp32config::Entry> entries)
 {
     this->title = title;
     this->name = name;
     this->entries = entries;
 }
 
-void ConfigNamespace::update(String key, String value)
+void esp32config::Namespace::update(String key, String value)
 {
     for (int i = 0; i < this->entries.size(); i++)
     {
@@ -83,7 +83,7 @@ void ConfigNamespace::update(String key, String value)
     }
 }
 
-void ConfigNamespace::save()
+void esp32config::Namespace::save()
 {
     Preferences prefs;
     if (prefs.begin(this->name.c_str(), false))
@@ -108,7 +108,7 @@ void ConfigNamespace::save()
     }
 }
 
-void ConfigNamespace::load()
+void esp32config::Namespace::load()
 {
     Preferences prefs;
     if (prefs.begin(this->name.c_str(), false))
@@ -121,7 +121,7 @@ void ConfigNamespace::load()
     }
 }
 
-String ConfigNamespace::html()
+String esp32config::Namespace::html()
 {
     String content = "<h2>";
     content.concat(this->title);
@@ -134,14 +134,14 @@ String ConfigNamespace::html()
     return content;
 }
 
-ConfigServer::ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)(), int serverPort)
+esp32config::Server::Server(std::vector<esp32config::Namespace> namespaces, String (*styleHandler)(), int serverPort)
 {
     this->namespaces = namespaces;
     this->styleHandler = styleHandler;
 	this->serverPort = serverPort;
 }
 
-void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
+void esp32config::Server::begin(std::string ssid, std::string password, IPAddress ip) {
 	// Load preference value
 	load();
 
@@ -152,16 +152,16 @@ void ConfigServer::begin(std::string ssid, std::string password, IPAddress ip) {
 	delay(100); // Wait 0.1 seconds for the wifi to be up and running
 
 	// Start web server
-	this->webServer.on("/", HTTP_GET, std::bind(&ConfigServer::handle_get_request, this));
-	this->webServer.on("/", HTTP_POST, std::bind(&ConfigServer::handle_post_request, this));
+	this->webServer.on("/", HTTP_GET, std::bind(&esp32config::Server::handle_get_request, this));
+	this->webServer.on("/", HTTP_POST, std::bind(&esp32config::Server::handle_post_request, this));
 	this->webServer.begin(serverPort);
 }
 
-void ConfigServer::loop() {
+void esp32config::Server::loop() {
 	this->webServer.handleClient();
 }
 
-String ConfigServer::create_html()
+String esp32config::Server::create_html()
 {
     String content = "<html><head><title>Samrt Home Agent</title>";
     if (this->styleHandler != 0)
@@ -181,7 +181,7 @@ String ConfigServer::create_html()
     return content;
 }
 
-void ConfigServer::load()
+void esp32config::Server::load()
 {
     for (int i = 0; i < this->namespaces.size(); i++)
     {
@@ -189,12 +189,12 @@ void ConfigServer::load()
     }
 }
 
-void ConfigServer::handle_get_request()
+void esp32config::Server::handle_get_request()
 {
 	this->webServer.send(200, "text/html", create_html().c_str());
 }
 
-void ConfigServer::handle_post_request()
+void esp32config::Server::handle_post_request()
 {
   if (this->webServer.hasArg("general.timeserver"))
   {

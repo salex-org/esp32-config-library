@@ -6,71 +6,76 @@
 #include <Preferences.h>
 #include <vector>
 
-enum ConfigEntryType
+namespace esp32config
 {
-    TEXT,
-    PASSWORD,
-    INTEGER
-};
 
-class ConfigEntry
-{
-private:
-	String title;
-	ConfigEntryType type;
-	String key;
-	String value;
-	String defaultValue;
+	enum EntryType
+	{
+		TEXT,
+		PASSWORD,
+		INTEGER
+	};
 
-public:
-	ConfigEntry(String title, ConfigEntryType type, String key, String defaultValue = "");
-	void update(String key, String value);
-	void save(Preferences *prefs);
-	void load(Preferences *prefs);
-	String html(String ns);
-};
+	class Entry
+	{
+	private:
+		String title;
+		EntryType type;
+		String key;
+		String value;
+		String defaultValue;
 
-class ConfigNamespace
-{
-private:
-	String title;
-	String name;
-	std::vector<ConfigEntry> entries;
+	public:
+		Entry(String title, EntryType type, String key, String defaultValue = "");
+		void update(String key, String value);
+		void save(Preferences *prefs);
+		void load(Preferences *prefs);
+		String html(String ns);
+	};
 
-public:
-	ConfigNamespace(String title, String name, std::vector<ConfigEntry> entries);
-	void update(String key, String value);
-	void save();
-	void load();
-	String html();
-};
+	class Namespace
+	{
+	private:
+		String title;
+		String name;
+		std::vector<Entry> entries;
 
-class ConfigServer
-{
-private:
-	std::vector<ConfigNamespace> namespaces;
-	String (*styleHandler)();
-	int serverPort;
-	WebServer webServer;
-	void load();
-	String create_html();
-	void handle_get_request();
-	void handle_post_request();
-public:
-	ConfigServer(std::vector<ConfigNamespace> namespaces, String (*styleHandler)() = 0, int port = 80);
-	void begin(std::string ssid = "ESP32 Config Server", std::string password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
-	void loop();
-};
+	public:
+		Namespace(String title, String name, std::vector<Entry> entries);
+		void update(String key, String value);
+		void save();
+		void load();
+		String html();
+	};
 
-class ConfigCli
-{
-private:
-	Stream *console;
+	class Server
+	{
+	private:
+		std::vector<Namespace> namespaces;
+		String (*styleHandler)();
+		int serverPort;
+		WebServer webServer;
+		void load();
+		String create_html();
+		void handle_get_request();
+		void handle_post_request();
+	public:
+		Server(std::vector<Namespace> namespaces, String (*styleHandler)() = 0, int port = 80);
+		void begin(std::string ssid = "ESP32 Config Server", std::string password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
+		void loop();
+	};
 
-public:
-	ConfigCli(std::vector<ConfigNamespace> namespaces);
-	void begin(Stream *console);
-	void loop();
-};
+	class Cli
+	{
+	private:
+		Stream *console;
+
+	public:
+		Cli(std::vector<Namespace> namespaces);
+		void begin(Stream *console);
+		void loop();
+	};
+
+}
 
 #endif

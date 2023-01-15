@@ -1,16 +1,16 @@
 #include <Arduino.h>
 #include "esp32-config-lib.hpp"
 
-ConfigCli configCLI({
-	ConfigNamespace("First namespace", "ns1", {
-		ConfigEntry("Text", TEXT, "text", "Default text"),
-		ConfigEntry("Secret", PASSWORD, "secret", "Default secret"),
-		ConfigEntry("Integer", INTEGER, "num", "123")
+esp32config::Cli configCLI({
+	esp32config::Namespace("First namespace", "ns1", {
+		esp32config::Entry("Text", esp32config::TEXT, "text", "Default text"),
+		esp32config::Entry("Secret", esp32config::PASSWORD, "secret", "Default secret"),
+		esp32config::Entry("Integer", esp32config::INTEGER, "num", "123")
 	}),
-    ConfigNamespace("Second namespace", "ns2", {
-		ConfigEntry("Text", TEXT, "text"),
-		ConfigEntry("Secret", PASSWORD, "secret"),
-		ConfigEntry("Integer", INTEGER, "num")
+    esp32config::Namespace("Second namespace", "ns2", {
+		esp32config::Entry("Text", esp32config::TEXT, "text"),
+		esp32config::Entry("Secret", esp32config::PASSWORD, "secret"),
+		esp32config::Entry("Integer", esp32config::INTEGER, "num")
 	})}
 );
 

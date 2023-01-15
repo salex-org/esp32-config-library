@@ -8,16 +8,16 @@
 #include "esp32-config-lib.h"
 
 
-ConfigCli::ConfigCli(std::vector<ConfigNamespace> namespaces) {
+esp32config::Cli::Cli(std::vector<esp32config::Namespace> namespaces) {
 }
 
-void ConfigCli::begin(Stream *console)
+void esp32config::Cli::begin(Stream *console)
 {
     this->console = console;
     this->console->printf("Config CLI started\n");
 }
 
-void ConfigCli::loop() {
+void esp32config::Cli::loop() {
 }
 
 // ===========================================================
