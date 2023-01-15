@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "esp32-config-lib.hpp"
 
-String configStyle()
+std::string configStyle()
 {
   return "body { background-color: cyan; }";
 }

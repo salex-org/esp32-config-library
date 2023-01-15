@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WebServer.h>
-#include <Preferences.h>
 #include <vector>
 #include <algorithm>
 #include "nvs_flash.h"
@@ -63,8 +62,8 @@ void list_keys(const char *part_name, const char *namespace_name) {
   }
 }
 
-String getInput() {
-	String input = "";
+std::string getInput() {
+	std::string input = "";
 	do {
     	input = Serial.readStringUntil('\n');
 	} while(name.length() == 0);

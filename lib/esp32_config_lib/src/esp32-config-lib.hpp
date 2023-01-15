@@ -3,8 +3,8 @@
 
 #include <Arduino.h>
 #include <WebServer.h>
-#include <Preferences.h>
 #include <vector>
+#include "nvs_flash.h"
 
 namespace esp32config
 {
@@ -19,49 +19,49 @@ namespace esp32config
 	class Entry
 	{
 	private:
-		String title;
+		std::string title;
 		EntryType type;
-		String key;
-		String value;
-		String defaultValue;
+		std::string key;
+		std::string value;
+		std::string defaultValue;
 
 	public:
-		Entry(String title, EntryType type, String key, String defaultValue = "");
-		void update(String key, String value);
-		void save(Preferences *prefs);
-		void load(Preferences *prefs);
-		String html(String ns);
+		Entry(const std::string& title, EntryType type, const std::string& key, const std::string& defaultValue = "");
+		void update(const std::string& key, const std::string& value);
+		void save(const nvs_handle_t& nvs);
+		void load(const nvs_handle_t& nvs);
+		std::string html();
 	};
 
 	class Namespace
 	{
 	private:
-		String title;
-		String name;
+		std::string title;
+		std::string name;
 		std::vector<Entry> entries;
 
 	public:
-		Namespace(String title, String name, std::vector<Entry> entries);
-		void update(String key, String value);
+		Namespace(const std::string& title, const std::string& name, std::vector<Entry> entries);
+		void update(const std::string& key, const std::string& value);
 		void save();
 		void load();
-		String html();
+		std::string html();
 	};
 
 	class Server
 	{
 	private:
 		std::vector<Namespace> namespaces;
-		String (*styleHandler)();
+		std::string (*styleHandler)();
 		int serverPort;
 		WebServer webServer;
 		void load();
-		String create_html();
+		std::string create_html();
 		void handle_get_request();
 		void handle_post_request();
 	public:
-		Server(std::vector<Namespace> namespaces, String (*styleHandler)() = 0, int port = 80);
-		void begin(std::string ssid = "ESP32 Config Server", std::string password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
+		Server(std::vector<Namespace> namespaces, std::string (*styleHandler)() = 0, int port = 80);
+		void begin(const std::string& ssid = "ESP32 Config Server", const std::string& password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
 		void loop();
 	};
 
