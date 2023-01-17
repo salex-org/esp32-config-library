@@ -7,8 +7,8 @@
 #include "esp32-config-lib.h"
 
 
-esp32config::Cli::Cli(std::vector<esp32config::Namespace> namespaces) {
-}
+esp32config::Cli::Cli(const Configuration& configuration) :
+	configuration(configuration), console(nullptr) {}
 
 void esp32config::Cli::begin(Stream *console)
 {

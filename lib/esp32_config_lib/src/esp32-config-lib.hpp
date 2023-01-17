@@ -30,7 +30,8 @@ namespace esp32config
 		void update(const std::string& key, const std::string& value);
 		void save(const nvs_handle_t& nvs);
 		void load(const nvs_handle_t& nvs);
-		std::string html();
+		std::string getTitle();
+		std::string getValue();
 	};
 
 	class Namespace
@@ -45,22 +46,37 @@ namespace esp32config
 		void update(const std::string& key, const std::string& value);
 		void save();
 		void load();
-		std::string html();
+		std::string getTitle();
+		std::string getName();		
+	};
+
+	class Configuration
+	{
+	private:
+		std::string title;
+		std::string partition;
+		std::vector<Namespace> namespaces;
+
+	public:
+		Configuration(const std::string& title, std::vector<Namespace> namespaces, const std::string& partition = "nvs");
+		std::vector<Namespace> getNamespaces();
 	};
 
 	class Server
 	{
 	private:
-		std::vector<Namespace> namespaces;
+		Configuration configuration;
 		std::string (*styleHandler)();
 		int serverPort;
 		WebServer webServer;
 		void load();
-		std::string create_html();
+		std::string create_html(esp32config::Configuration& config);
+		std::string create_html(esp32config::Namespace& ns);
+		std::string create_html(esp32config::Entry& entry);
 		void handle_get_request();
 		void handle_post_request();
 	public:
-		Server(std::vector<Namespace> namespaces, std::string (*styleHandler)() = 0, int port = 80);
+		Server(const Configuration& configuration, std::string (*styleHandler)() = 0, int port = 80);
 		void begin(const std::string& ssid = "ESP32 Config Server", const std::string& password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
 		void loop();
 	};
@@ -69,9 +85,10 @@ namespace esp32config
 	{
 	private:
 		Stream *console;
+		Configuration configuration;
 
 	public:
-		Cli(std::vector<Namespace> namespaces);
+		Cli(const Configuration& configuration);
 		void begin(Stream *console);
 		void loop();
 	};
