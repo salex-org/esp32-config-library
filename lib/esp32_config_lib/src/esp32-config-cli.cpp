@@ -17,6 +17,13 @@ void esp32config::Cli::begin(Stream *console)
 }
 
 void esp32config::Cli::loop() {
+	this->console->
+
+	if(this->console->available() > 0) {
+		std::string	input = "";
+		input = this->console->readStringUntil('\n').c_str();
+		this->console->printf("\U0001F37A Cheers %s\n", input.c_str());
+	}
 }
 
 // ===========================================================

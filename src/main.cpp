@@ -40,9 +40,9 @@ void setup()
 {
 	Serial.begin(115200);
 	Serial.println();
-
 	Bluetooth.begin("Config Library Test");
 	configCLI.begin(&Bluetooth);
+	Bluetooth.conn
 //	configCLI.begin(&Serial);
 	configServer.begin();
 }
