@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "esp32-config-lib.hpp"
+#include "BluetoothSerial.h"
 
 std::string configStyle()
 {
@@ -33,16 +34,21 @@ esp32config::Cli configCLI({
 	})}
 );
 
+BluetoothSerial Bluetooth;
+
 void setup()
 {
 	Serial.begin(115200);
 	Serial.println();
-	configCLI.begin(&Serial);
+
+	Bluetooth.begin("Config Library Test");
+	configCLI.begin(&Bluetooth);
+//	configCLI.begin(&Serial);
 	configServer.begin();
 }
 
 void loop()
 {
 	configCLI.loop();
-	configServer.loop();
+//	configServer.loop();
 }

@@ -26,8 +26,16 @@
     ],
 	"examples": [
 		{
-			"name": "CLI",
-			"base": "examples/cli",
+			"name": "Bluetooth CLI",
+			"base": "examples/bluetooth-cli",
+			"files": [
+				"cli.cpp",
+				"platformio.ini"
+			]
+		},
+		{
+			"name": "Serial CLI",
+			"base": "examples/serial-cli",
 			"files": [
 				"cli.cpp",
 				"platformio.ini"
