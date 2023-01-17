@@ -34,8 +34,8 @@
 			]
 		},
 		{
-			"name": "Serial CLI",
-			"base": "examples/serial-cli",
+			"name": "USB CLI",
+			"base": "examples/usb-cli",
 			"files": [
 				"cli.cpp",
 				"platformio.ini"
