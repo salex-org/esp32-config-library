@@ -43,16 +43,12 @@ std::string esp32config::Server::create_html(esp32config::Configuration& config)
     return content;
 }
 
-std::string esp32config::Server::create_html(esp32config::Namespace& ns)  {
-	char* content = new char[65536];
-    const char* template1 = "<h2>%s<h2>";
-	std::snprintf(content, sizeof(content), template1, ns.getTitle());
-/*	
-    for (int i = 0; i < this->entries.size(); i++)
-    {
-        content.concat(this->entries[i].html(this->name));
-    }
-    content.concat("</table>"); */
+std::string esp32config::Server::create_html(esp32config::Namespace& ns)
+{
+	std::string content = "<h2>" + ns.getTitle() + "</h2>";
+    for (Entry& each : ns.entries) {
+		content += create_html(each);
+	}
     return content;
 }
 
