@@ -8,6 +8,12 @@
 
 namespace esp32config
 {
+	class Entry;
+	class ValidationError;
+	class Namespace;
+	class Configuration;
+	class Server;
+	class Cli;
 
 	enum EntryType
 	{
@@ -16,38 +22,64 @@ namespace esp32config
 		INTEGER
 	};
 
+	enum Status
+	{
+		OK,
+		INVALID_VALUES,
+		READ_FAILURE,
+		WRITE_FAILURE
+	};
+
+	class ValidationError
+	{
+	private:
+		std::string message;
+		std::vector<Entry> invalidEntries;
+
+	public:
+		ValidationError(const std::string& message,  std::vector<Entry> invalidEntries);
+		ValidationError(const std::string& message,  Entry* invalidEntry);
+	};
+
 	class Entry
 	{
+	friend Namespace;
 	private:
 		std::string title;
 		EntryType type;
 		std::string key;
 		std::string value;
 		std::string defaultValue;
-
-	public:
-		Entry(const std::string& title, EntryType type, const std::string& key, const std::string& defaultValue = "");
-		void update(const std::string& key, const std::string& value);
+		boolean nullable;
+		void validate(std::vector<ValidationError>& errorList);
 		void save(const nvs_handle_t& nvs);
 		void load(const nvs_handle_t& nvs);
+
+	public:
+		Entry(const std::string& title, EntryType type, const std::string& key, boolean nullable = false, const std::string& defaultValue = "");
+		void update(const std::string& key, const std::string& value);
 		std::string getTitle();
 		std::string getValue();
 	};
 
 	class Namespace
 	{
+	friend Server;
 	private:
 		std::string title;
 		std::string name;
 		std::vector<Entry> entries;
+		std::vector<ValidationError> validationErrors;
+		std::vector<ValidationError> (*customValidation)(std::vector<Entry> entries);
 
 	public:
-		Namespace(const std::string& title, const std::string& name, std::vector<Entry> entries);
+		Namespace(const std::string& title, const std::string& name, std::vector<Entry> entries, std::vector<ValidationError> (*customValidation)(std::vector<Entry> entries) = 0);
 		void update(const std::string& key, const std::string& value);
-		void save();
-		void load();
+		Status save();
+		Status load();
 		std::string getTitle();
-		std::string getName();		
+		std::string getName();
+		Status validate();
 	};
 
 	class Configuration
