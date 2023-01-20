@@ -1,0 +1,31 @@
+html {
+    font-size: 3vw;
+    color: black;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
+}
+
+body {
+    background-color: lightseagreen;
+}
+
+.namespace {
+    padding: 0.5em 1em;
+    height: 1.2em;
+}
+
+.namespace .name {
+     background-color: lightgray;
+     position: relative;
+     float: left;
+     width: 20%;
+}
+
+.namespace .title {
+    background-color: white;
+    position: relative;
+    float: right;
+    width: 80%;
+}
+
