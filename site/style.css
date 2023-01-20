@@ -1,13 +1,15 @@
-html {
-    font-size: 3vw;
-    color: black;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: normal;
+:root {
+	--salex-blue: #2098c4;
+	--salex-orange: #ec9c3e;
 }
 
 body {
-    background-color: lightseagreen;
+    color: black;
+    background-color: var(--salex-blue);
+	font-size: 3vw;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;
 }
 
 .namespace {
