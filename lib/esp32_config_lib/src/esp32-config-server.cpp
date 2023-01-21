@@ -37,7 +37,7 @@ std::string esp32config::Server::create_html(std::string& title, std::string& bo
     content += "</head><body><h1>";
 	content += title;
 	content += "</h1>";
-	content += "body";
+	content += body;
     content += "</body></html>";
     return content;
 }
@@ -62,14 +62,14 @@ std::string esp32config::Server::create_namespace_html(esp32config::Namespace& n
 		content += each.getTitle();
 		content += "</p>";
     }
-    content += "<p><a href=\"..\" />Back</a><input type=\"submit\" name=\"save\" value=\"Save\" /></p>";
+    content += "<p><a href=\"..\" />&cross; cancel</a><a href=\".\">&check; save</a><input type=\"submit\" name=\"save\" value=\"Save\" /></p>";
     content += "</form>";
     return create_html(title, content);
 
 }
 
 std::string esp32config::Server::create_entry_html(esp32config::Namespace& ns, esp32config::Entry& entry)  {
-	std::string title = ns.getTitle() + "&nbsp" + entry.getTitle();
+	std::string title = ns.getTitle() + "&nbsp;&raquo;&nbsp;" + entry.getTitle();
     std::string content;
 	// TODO: Create content for entry value selection
 	return create_html(title, content);
