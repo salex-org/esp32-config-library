@@ -34,10 +34,10 @@ void esp32config::Entry::save(const nvs_handle_t& nvs)
     }
 }
 
-void esp32config::Entry::validate(std::vector<esp32config::ValidationError>& errorList) {
+void esp32config::Entry::validate(std::vector<esp32config::ValidationError*>& errorList) {
 	if(this->value.empty()) {
 		if(!this->nullable) {
-			errorList.push_back(ValidationError(this->title + " must not be empy.", this));
+			errorList.push_back(new ValidationError(this->title + " must not be empy.", this));
 		}
 	} else {
 	    switch (this->type)
@@ -46,7 +46,7 @@ void esp32config::Entry::validate(std::vector<esp32config::ValidationError>& err
 			char* rest;
 			std::strtol(this->value.c_str(), &rest, 10);
 			if(strlen(rest) > 0) {
-				errorList.push_back(ValidationError(this->value + " is not an integer.", this));
+				errorList.push_back(new ValidationError(this->value + " is not an integer.", this));
 			}
 			break;
 		}

@@ -1,6 +1,8 @@
 #include "esp32-config-lib.hpp"
 #include "uri/UriBraces.h"
 
+const std::string TITLE_SPLITTER = "&nbsp;&raquo;&nbsp;";
+
 esp32config::Server::Server(const Configuration& configuration, std::string (*styleHandler)(), int serverPort) :
 	configuration(configuration), styleHandler(styleHandler), serverPort(serverPort) {}
 
@@ -46,20 +48,20 @@ std::string esp32config::Server::create_root_html(esp32config::Configuration& co
 {
 	std::string title = config.title;
     std::string content;
-    for (Namespace& each : this->configuration.getNamespaces())
+    for (Namespace* each : this->configuration.getNamespaces())
     {
-        content += "<p><a href=\"" + each.getName() + "\">" + each.getTitle() + "</a></p>";
+        content += "<p><a href=\"" + each->getName() + "\">" + each->getTitle() + "</a></p>";
     }
     return create_html(title, content);
 }
 
-std::string esp32config::Server::create_namespace_html(esp32config::Namespace& ns)
+std::string esp32config::Server::create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns)
 {
-	std::string title = ns.getTitle();
+	std::string title = config.title + TITLE_SPLITTER + ns.getTitle();
     std::string content = "<form action=\"/\" method=\"post\">";
-    for (Entry& each : ns.getEntries()) {
+    for (Entry* each : ns.getEntries()) {
 		content += "<p>";
-		content += each.getTitle();
+		content += each->getTitle();
 		content += "</p>";
     }
     content += "<p><a href=\"..\" />&cross; cancel</a><a href=\".\">&check; save</a><input type=\"submit\" name=\"save\" value=\"Save\" /></p>";
@@ -68,8 +70,8 @@ std::string esp32config::Server::create_namespace_html(esp32config::Namespace& n
 
 }
 
-std::string esp32config::Server::create_entry_html(esp32config::Namespace& ns, esp32config::Entry& entry)  {
-	std::string title = ns.getTitle() + "&nbsp;&raquo;&nbsp;" + entry.getTitle();
+std::string esp32config::Server::create_entry_html(esp32config::Configuration& config, esp32config::Namespace& ns, esp32config::Entry& entry)  {
+	std::string title = config.title + TITLE_SPLITTER + ns.getTitle() + TITLE_SPLITTER + entry.getTitle();
     std::string content;
 	// TODO: Create content for entry value selection
 	return create_html(title, content);
@@ -77,9 +79,9 @@ std::string esp32config::Server::create_entry_html(esp32config::Namespace& ns, e
 
 void esp32config::Server::load()
 {
-    for (Namespace& each : this->configuration.getNamespaces())
+    for (Namespace* each : this->configuration.getNamespaces())
     {
-        each.load();
+        each->load();
     }
 }
 
@@ -93,7 +95,7 @@ void esp32config::Server::handle_get_namespace_request()
 	std::string nsName = this->webServer.pathArg(0).c_str();
 	Namespace* ns = this->configuration.getNamespace(nsName);
 	if(ns != nullptr) {
-		this->webServer.send(200, "text/html", create_namespace_html(*ns).c_str());
+		this->webServer.send(200, "text/html", create_namespace_html(this->configuration, *ns).c_str());
 	} else {
 		this->webServer.send(404, "text/html", ("Namespace " + nsName + " not found").c_str());
 	}
@@ -107,7 +109,7 @@ void esp32config::Server::handle_get_entry_request()
 		std::string entryKey = this->webServer.pathArg(1).c_str();
 		Entry* entry = ns->getEntry(entryKey);
 		if(entry != nullptr) {
-			this->webServer.send(200, "text/html", create_entry_html(*ns, *entry).c_str());
+			this->webServer.send(200, "text/html", create_entry_html(this->configuration, *ns, *entry).c_str());
 		} else {
 			this->webServer.send(404, "text/html", ("Entry " + entryKey + " not found in Namespace " + nsName).c_str());
 		}
