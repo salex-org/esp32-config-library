@@ -2,5 +2,6 @@
 
 An easy to use and extensible library for managing preferences.
 
-## WARNING: This library is currently under development and not yet functional
-A first functional version (1.0.0 )will be published until the end of January 2023.
+## WARNING: This library is currently under development
+The CLI is not finished yet but the web server can be used to configure value via wifi.
+**It is recommended to start the web server with an individual password!**

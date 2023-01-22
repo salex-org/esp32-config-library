@@ -10,14 +10,27 @@ void esp32config::Entry::update(const std::string& value)
 
 void esp32config::Entry::load(const nvs_handle_t& nvs)
 {
-	size_t required_size;
-	if(nvs_get_str(nvs, this->key.c_str(), NULL, &required_size) == ESP_OK) {
-		char* buffer = new char[required_size];
-		if(nvs_get_str(nvs, this->key.c_str(), buffer, &required_size) == ESP_OK) {
-			this->value = std::string(buffer);
+	switch (this->type)
+    {
+    case INTEGER:
+		int32_t buffer;
+		if(nvs_get_i32(nvs, this->key.c_str(), &buffer) == ESP_OK) {
+			this->value = std::to_string(buffer);
 		}
-		delete[] buffer;
-	}
+        break;
+    case TEXT:
+    case PASSWORD:
+		size_t required_size;
+		if(nvs_get_str(nvs, this->key.c_str(), NULL, &required_size) == ESP_OK) {
+			char* buffer = new char[required_size];
+			if(nvs_get_str(nvs, this->key.c_str(), buffer, &required_size) == ESP_OK) {
+				this->value = std::string(buffer);
+			}
+			delete[] buffer;
+		}
+        break;
+    }
+
 }
 
 void esp32config::Entry::save(const nvs_handle_t& nvs)

@@ -84,6 +84,7 @@ const std::string DEFAULT_STYLE = ""
 "	border-width: 2px;\n"
 "	border-radius: 0.7em;\n"
 "	border-style: solid;\n"
+"	margin-bottom: 0.5em;\n"
 "}\n"
 ".error {\n"
 "	color: red !important;\n"
@@ -156,13 +157,13 @@ std::string esp32config::Server::create_namespace_html(esp32config::Configuratio
 	std::string title = config.title + TITLE_SPLITTER + ns.getTitle();
 	std::string content = "";
 	if(message != "") {
-		content += "<div class=\"messages\"><p>" + message + "</p></div>";
+		content += "<div class=\"messages\"><p>&#9432;&nbsp;" + message + "</p></div>";
 	}
 	std::vector<ValidationError*>& errors = ns.getValidationErrors();
 	if(!errors.empty()) {
 		content += "<div class=\"messages error\">";
 		for(ValidationError* v : errors) {
-			content += "<p>" + v->getMessage() + "</p>";
+			content += "<p>&#9888;&nbsp;" + v->getMessage() + "</p>";
 		}
 		content += "</div>";
 	}
@@ -178,7 +179,7 @@ std::string esp32config::Server::create_namespace_html(esp32config::Configuratio
 		content += "</div>";
     }
     content += "<div class=\"buttons\">";
-	content += "<button type=\"button\" onclick=\"window.location.href='/'\">&cross;&nbsp;Cancel</button>";
+	content += "<button type=\"button\" onclick=\"window.location.href='/'\">&cross;&nbsp;Close</button>";
 	content += "<button type=\"send\">&check; &nbsp;Save</button>";
 	content += "</div>";
     content += "</form>";
@@ -250,11 +251,8 @@ void esp32config::Server::handle_post_request()
 				e->update(argValue);
 			}
 		}
-		if(ns->validate() == OK) {
-			ns->save();
-			this->webServer.send(200, "text/html", this->create_root_html(this->configuration).c_str());
-			this->webServer.sendHeader("Location", "/", true);  
-			this->webServer.send(303, "text/plain", "");
+		if(ns->save() == OK) {
+			this->webServer.send(200, "text/html", this->create_namespace_html(this->configuration, *ns, "Saving new values successful").c_str());
 		} else {
 			this->webServer.send(400, "text/html", this->create_namespace_html(this->configuration, *ns).c_str());
 		}

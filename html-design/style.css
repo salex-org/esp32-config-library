@@ -90,6 +90,7 @@ body {
 	border-width: 2px;
 	border-radius: 0.7em;
 	border-style: solid;
+	margin-bottom: 0.5em;
 }
 
 .error {
