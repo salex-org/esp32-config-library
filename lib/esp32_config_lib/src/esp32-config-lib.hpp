@@ -83,6 +83,8 @@ namespace esp32config
 		std::string getTitle();
 		std::string getName();
 		std::vector<Entry*>& getEntries();
+		std::vector<ValidationError*>& getValidationErrors();
+		bool isEntryInvalid(std::string& key);
 		Entry* getEntry(std::string& key);
 		Status validate();
 	};
@@ -112,7 +114,7 @@ namespace esp32config
 		void load();
 		std::string create_html(std::string& title, std::string& body);
 		std::string create_root_html(esp32config::Configuration& config);
-		std::string create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns);
+		std::string create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns, const std::string& message = "");
 		std::string create_entry_html(esp32config::Configuration& config, esp32config::Namespace& ns, esp32config::Entry& entry);
 		void handle_get_style_request();
 		void handle_get_root_request();

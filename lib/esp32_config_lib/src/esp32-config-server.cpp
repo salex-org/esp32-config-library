@@ -2,97 +2,96 @@
 #include "uri/UriBraces.h"
 
 const std::string DEFAULT_STYLE = ""
-"body {"
-"   color: black;"
-"   background-color: #2098c4;"
-"	font-size: 2vw;"
-"   font-family: sans-serif;"
-"   font-style: normal;"
-"   font-weight: normal;"
-"}"
-".entry {"
-"	position: relative;"
-"	width: 100%;"
-"	height: 3.5em;"
-"}"
-".entry div {"
-"	position: relative;"
-"	height: 1.4em;"
-"	border-style: solid;"
-"	font-size: 3vw;"
-"	padding: 0.2em 0.5em;"
-"	vertical-align: middle;"
-"	line-height: 1.4em;"
-"}"
-".entry .key {"
-"	background-color: lightgray;"
-"	float: left;"
-"	width: calc(20% - 4px - 1em);"
-"	border-width: 2px;"
-"	border-radius: 0.7em 0 0 0.7em;"
-"}"
-".entry .value {"
-"	background-color: white;"
-"	float: right;"
-"	width: calc(80% - 2px - 1em);"
-"	border-width: 2px 2px 2px 0px;"
-"	border-radius: 0 0.7em 0.7em 0;"
-"}"
-".entry .value input {"
-"	border: none;"
-"	width: calc(100% - 1.2em);"
-"	height: 1.4em;"
-"	font-size: 3vw;"
-"	vertical-align: middle;"
-"}"
-".buttons button {"
-"	font-size: 3vw;"
-"	height: 2em;"
-"	background-color: lightgray;"
-"	border-width: 2px;"
-"	border-radius: 0.7em;"
-"	padding: 0.2em 0.5em;"
-"	vertical-align: middle;"
-"	margin-right: 0.5em;"
-"	margin-top: 0.5em;"
-"}"
-".buttons button:hover {"
-"	background-color: #ec9c3e;"
-"}"
-".namespaces button {"
-"	float: left;"
-"	font-size: 3vw;"
-"	background-color: lightgray;"
-"	height: 2em;"
-"	width: calc(100% - 4px);"
-"	border-width: 2px;"
-"	border-radius: 0.7em;"
-"	padding: 0.2em 0.5em;"
-"	vertical-align: middle;"
-"	text-align: left;"
-"	margin-right: 0.5em;"
-"	margin-top: 0.5em;"
-"}"
-".namespaces button:hover {"
-"	background-color: #ec9c3e;"
-"}"
-".messages {"
-"	color: black;"
-"	background-color: lightgray;"
-"	font-size: 3vw;"
-"	padding: 0.2em 0.5em;"
-"	border-width: 2px;"
-"	border-radius: 0.7em;"
-"	border-style: solid;"
-"}"
-".error {"
-"	color: red !important;"
-"	border-color: red !important;"
-"}"
-".error input {"
-"	color: red !important;"
-"}";
-
+"body {\n"
+"	color: black;\n"
+"	background-color: #2098c4;\n"
+"	font-size: 2vw;\n"
+"	font-family: sans-serif;\n"
+"	font-style: normal;\n"
+"	font-weight: normal;\n"
+"}\n"
+".entry {\n"
+"	position: relative;\n"
+"	width: 100%;\n"
+"	height: 3.5em;\n"
+"}\n"
+".entry div {\n"
+"	position: relative;\n"
+"	height: 1.4em;\n"
+"	border-style: solid;\n"
+"	font-size: 3vw;\n"
+"	padding: 0.2em 0.5em;\n"
+"	vertical-align: middle;\n"
+"	line-height: 1.4em;\n"
+"}\n"
+".entry .key {\n"
+"	background-color: lightgray;\n"
+"	float: left;\n"
+"	width: calc(20% - 4px - 1em);\n"
+"	border-width: 2px;\n"
+"	border-radius: 0.7em 0 0 0.7em;\n"
+"}\n"
+".entry .value {\n"
+"	background-color: white;\n"
+"	float: right;\n"
+"	width: calc(80% - 2px - 1em);\n"
+"	border-width: 2px 2px 2px 0px;\n"
+"	border-radius: 0 0.7em 0.7em 0;\n"
+"}\n"
+".entry .value input {\n"
+"	border: none;\n"
+"	width: calc(100% - 1.2em);\n"
+"	height: 1.4em;\n"
+"	font-size: 3vw;\n"
+"	vertical-align: middle;\n"
+"}\n"
+".buttons button {\n"
+"	font-size: 3vw;\n"
+"	height: 2em;\n"
+"	background-color: lightgray;\n"
+"	border-width: 2px;\n"
+"	border-radius: 0.7em;\n"
+"	padding: 0.2em 0.5em;\n"
+"	vertical-align: middle;\n"
+"	margin-right: 0.5em;\n"
+"	margin-top: 0.5em;\n"
+"}\n"
+".buttons button:hover {\n"
+"	background-color: #ec9c3e;\n"
+"}\n"
+".namespaces button {\n"
+"	float: left;\n"
+"	font-size: 3vw;\n"
+"	background-color: lightgray;\n"
+"	height: 2em;\n"
+"	width: calc(100% - 4px);\n"
+"	border-width: 2px;\n"
+"	border-radius: 0.7em;\n"
+"	padding: 0.2em 0.5em;\n"
+"	vertical-align: middle;\n"
+"	text-align: left;\n"
+"	margin-right: 0.5em;\n"
+"	margin-top: 0.5em;\n"
+"}\n"
+".namespaces button:hover {\n"
+"	background-color: #ec9c3e;\n"
+"}\n"
+".messages {\n"
+"	color: black;\n"
+"	background-color: lightgray;\n"
+"	font-size: 3vw;\n"
+"	padding: 0.2em 0.5em;\n"
+"	border-width: 2px;\n"
+"	border-radius: 0.7em;\n"
+"	border-style: solid;\n"
+"}\n"
+".error {\n"
+"	color: red !important;\n"
+"	border-color: red !important;\n"
+"}\n"
+".error input {\n"
+""	"color: red !important;\n"
+"}\n";
 
 const std::string TITLE_SPLITTER = "&nbsp;&raquo;&nbsp;";
 
@@ -120,7 +119,7 @@ void esp32config::Server::begin(const std::string& ssid, const std::string& pass
 	this->webServer.on("/", HTTP_GET, std::bind(&esp32config::Server::handle_get_root_request, this));
 	this->webServer.on(UriBraces("/{}"), HTTP_GET, std::bind(&esp32config::Server::handle_get_namespace_request, this));
 	this->webServer.on(UriBraces("/{}/{}"), HTTP_GET, std::bind(&esp32config::Server::handle_get_entry_request, this));
-	this->webServer.on("/", HTTP_POST, std::bind(&esp32config::Server::handle_post_request, this));
+	this->webServer.on(UriBraces("/{}"), HTTP_POST, std::bind(&esp32config::Server::handle_post_request, this));
 	this->webServer.begin(serverPort);
 }
 
@@ -143,7 +142,7 @@ std::string esp32config::Server::create_root_html(esp32config::Configuration& co
 {
 	std::string title = config.title;
     std::string content;
-	content += "<div class=\"namespace\">";
+	content += "<div class=\"namespaces\">";
     for (Namespace* each : this->configuration.getNamespaces())
     {
 		content += "<button onclick=\"window.location.href='/" + each->getName() + "'\">" + each->getTitle() + "</button>";
@@ -152,19 +151,34 @@ std::string esp32config::Server::create_root_html(esp32config::Configuration& co
     return create_html(title, content);
 }
 
-std::string esp32config::Server::create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns)
+std::string esp32config::Server::create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns, const std::string& message)
 {
 	std::string title = config.title + TITLE_SPLITTER + ns.getTitle();
-    std::string content = "<form action=\"/\" method=\"post\">";
-	content += "<input type=\nhidden\n id=\"namespacce\" value=\"" + ns.getName() + "\" />";
+	std::string content = "";
+	if(message != "") {
+		content += "<div class=\"messages\"><p>" + message + "</p></div>";
+	}
+	std::vector<ValidationError*>& errors = ns.getValidationErrors();
+	if(!errors.empty()) {
+		content += "<div class=\"messages error\">";
+		for(ValidationError* v : errors) {
+			content += "<p>" + v->getMessage() + "</p>";
+		}
+		content += "</div>";
+	}
+    content += "<form action=\"/" + ns.getName() + "\" method=\"post\">";
     for (Entry* each : ns.getEntries()) {
-		content += "<div class=\"line entry\">";
-		content += "<div class=\"linecomponent key\">" + each->getTitle() + "</div>";
-		content += "<div class=\"linecomponent value\"><input type=\"text\" id=\"" + ns.getName() + "." + each->getKey() + "\" value=\"" + each->getValue() + "\" /></div>";
+		std::string eachKey = each->getKey();
+		content += "<div class=\"entry";
+		ns.isEntryInvalid(eachKey)?" error":"";
+		content += ns.isEntryInvalid(eachKey)?" error":"";
+		content += "\">";
+		content += "<div class=\"key\">" + each->getTitle() + "</div>";
+		content += "<div class=\"value\"><input type=\"text\" name=\"" + ns.getName() + "." + each->getKey() + "\" value=\"" + each->getValue() + "\" /></div>";
 		content += "</div>";
     }
     content += "<div class=\"buttons\">";
-	content += "<button onclick=\"window.location.href='/'\">&cross;&nbsp;Cancel</button>";
+	content += "<button type=\"button\" onclick=\"window.location.href='/'\">&cross;&nbsp;Cancel</button>";
 	content += "<button type=\"send\">&check; &nbsp;Save</button>";
 	content += "</div>";
     content += "</form>";
@@ -190,7 +204,6 @@ void esp32config::Server::load()
 void esp32config::Server::handle_get_style_request() {
 	this->webServer.send(200, "text/html", this->style.c_str());
 }
-
 
 void esp32config::Server::handle_get_root_request()
 {
@@ -227,8 +240,7 @@ void esp32config::Server::handle_get_entry_request()
 
 void esp32config::Server::handle_post_request()
 {
-  if (this->webServer.hasArg("namespace")) {
-	std::string nsName = this->webServer.arg("namespace").c_str();
+	std::string nsName = this->webServer.pathArg(0).c_str();
 	Namespace* ns = this->configuration.getNamespace(nsName);
 	if(ns != nullptr) {
 		for(Entry* e : ns->getEntries()) {
@@ -251,7 +263,4 @@ void esp32config::Server::handle_post_request()
 	} else {
 		this->webServer.send(404, "text/html", ("Namespace " + nsName + " not found").c_str());
 	}
-  } else {
-    this->webServer.send(400, "text/html", "missing data");
-  }
 }

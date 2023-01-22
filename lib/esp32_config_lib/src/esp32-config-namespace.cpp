@@ -81,6 +81,21 @@ std::string esp32config::Namespace::getName()
 	return this->name;
 }
 
+std::vector<esp32config::ValidationError*>& esp32config::Namespace::getValidationErrors() {
+	return this->validationErrors;
+}
+
+bool esp32config::Namespace::isEntryInvalid(std::string& key) {
+	for(ValidationError* v : this->validationErrors) {
+		for(Entry* e : v->getInvalidEntries()) {
+			if(e->key == key) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 std::vector<esp32config::Entry*>& esp32config::Namespace::getEntries() {
 	return this->entries;
 }
