@@ -1,44 +1,42 @@
 {
-	"name": "ESP32ConfigLibrary",
-	"version": "",
-	"description": "An easy to use and extensible library for managing preferences.",
-	"keywords": "esp32, esp8266, preferences, config",
-	"repository":
-	{
-	  "type": "git",
-	  "url": "https://github.com/salex-org/esp32-config-library.git"
-	},
-	"authors":
-	[
-	  {
-		"name": "Sascha Gärtner",
-		"email": "sascha.gaertner@salex.org",
-		"maintainer": true
-	  }
-	],
-	"license": "MIT",
-	"homepage": "https://github.com/salex-org",
-	"platforms": "espressif32",
-	"frameworks": "arduino",
-	"headers": [
-        "esp32-config-lib.hpp",
-        "esp32-config-lib.h"
-    ],
-	"examples": [
-		{
-			"name": "CLI",
-			"base": "examples/cli",
-			"files": [
-				"cli.cpp",
-				"platformio.ini"
-			]
-		},
-		{
-			"name": "Server",
-			"base": "examples/server",
-			"files": [
-				"server.cpp"
-			]
-		}
-	]
+  "name": "ESP32ConfigLibrary",
+  "version": "1.0.0",
+  "description": "An easy to use and extensible library for managing preferences.",
+  "keywords": "esp32, esp8266, preferences, config",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salex-org/esp32-config-library.git"
+  },
+  "authors": [
+    {
+      "name": "Sascha Gärtner",
+      "email": "sascha.gaertner@salex.org",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/salex-org",
+  "platforms": "espressif32",
+  "frameworks": "arduino",
+  "headers": [
+    "esp32-config-lib.hpp",
+    "esp32-config-lib.h"
+  ],
+  "examples": [
+    {
+      "name": "CLI",
+      "base": "examples/cli",
+      "files": [
+        "cli.cpp",
+        "platformio.ini"
+      ]
+    },
+    {
+      "name": "Server",
+      "base": "examples/server",
+      "files": [
+        "server.cpp"
+      ]
+    }
+  ]
 }
