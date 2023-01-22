@@ -1,11 +1,6 @@
 #include <Arduino.h>
 #include "esp32-config-lib.hpp"
 
-std::string configStyle()
-{
-  return "body { background-color: cyan; }";
-}
-
 esp32config::Configuration config("Example Config",{
 	new esp32config::Namespace("First namespace", "ns1", {
 		new esp32config::Entry("Text", esp32config::TEXT, "text", "Default text"),
@@ -19,7 +14,7 @@ esp32config::Configuration config("Example Config",{
 	})}
 );
 
-esp32config::Server configServer(config, &configStyle);
+esp32config::Server configServer(config);
 
 esp32config::Cli configCLI(config);
 

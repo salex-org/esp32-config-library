@@ -60,6 +60,7 @@ namespace esp32config
 	public:
 		Entry(const std::string& title, EntryType type, const std::string& key, boolean nullable = false, const std::string& defaultValue = "");
 		void update(const std::string& value);
+		std::string getKey();
 		std::string getTitle();
 		std::string getValue();
 	};
@@ -105,7 +106,7 @@ namespace esp32config
 	{
 	private:
 		Configuration configuration;
-		std::string (*styleHandler)();
+		std::string style;
 		int serverPort;
 		WebServer webServer;
 		void load();
@@ -113,12 +114,13 @@ namespace esp32config
 		std::string create_root_html(esp32config::Configuration& config);
 		std::string create_namespace_html(esp32config::Configuration& config, esp32config::Namespace& ns);
 		std::string create_entry_html(esp32config::Configuration& config, esp32config::Namespace& ns, esp32config::Entry& entry);
+		void handle_get_style_request();
 		void handle_get_root_request();
 		void handle_get_namespace_request();
 		void handle_get_entry_request();
 		void handle_post_request();
 	public:
-		Server(const Configuration& configuration, std::string (*styleHandler)() = 0, int port = 80);
+		Server(const Configuration& configuration, const std::string& style = "", int port = 80);
 		void begin(const std::string& ssid = "ESP32 Config Server", const std::string& password = "esp32secret", IPAddress ip = IPAddress(192,168,1,1));
 		void loop();
 	};

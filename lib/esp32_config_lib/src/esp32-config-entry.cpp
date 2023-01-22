@@ -59,3 +59,6 @@ std::string esp32config::Entry::getTitle() {
 std::string esp32config::Entry::getValue() {
 	return this->value;
 }
+std::string esp32config::Entry::getKey() {
+	return this->key;
+}
