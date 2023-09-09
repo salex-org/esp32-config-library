@@ -53,7 +53,6 @@ jobs:
 
       - name: Publish library
         run: |
-          pwd
           pio package publish --owner salex-org --type library --notify --no-interactive $(pwd)/lib/esp32_config_lib
         env:
           PLATFORMIO_AUTH_TOKEN: ${{ secrets.PLATFORMIO_AUTH_TOKEN }}
