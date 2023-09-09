@@ -45,6 +45,22 @@ const std::string DEFAULT_STYLE = ""
 "	font-size: 3vw;\n"
 "	vertical-align: middle;\n"
 "}\n"
+".entry .value textarea {\n"
+"	border: none;\n"
+"	width: calc(100% - 1.2em);\n"
+"	height: 7em;\n"
+"	font-size: 3vw;\n"
+"   font-family: sans-serif;\n"
+"   font-style: normal;\n"
+"   font-weight: normal;\n"	
+"	vertical-align: middle;\n"
+"}\n"
+".textarea {\n"
+"	height: 12em !important;\n"
+"}\n"
+".textarea div {\n"
+"	height: 7em !important;\n"
+"}\n"
 ".buttons button {\n"
 "	font-size: 3vw;\n"
 "	height: 2em;\n"
@@ -171,11 +187,17 @@ std::string esp32config::Server::create_namespace_html(esp32config::Configuratio
     for (Entry* each : ns.getEntries()) {
 		std::string eachKey = each->getKey();
 		content += "<div class=\"entry";
-		ns.isEntryInvalid(eachKey)?" error":"";
 		content += ns.isEntryInvalid(eachKey)?" error":"";
+		content += each->getType()==TEXTAREA?" textarea":"";
 		content += "\">";
 		content += "<div class=\"key\">" + each->getTitle() + "</div>";
-		content += "<div class=\"value\"><input type=\"text\" name=\"" + ns.getName() + "." + each->getKey() + "\" value=\"" + each->getValue() + "\" /></div>";
+		content += "<div class=\"value\">";
+		if(each->getType() == TEXTAREA) {
+			content += "<textarea name=\"" + ns.getName() + "." + each->getKey() + "\">" + each->getValue() + "</textarea>";
+		} else {
+			content += "<input type=\"text\" name=\"" + ns.getName() + "." + each->getKey() + "\" value=\"" + each->getValue() + "\" />";
+		}
+		content += "</div>";
 		content += "</div>";
     }
     content += "<div class=\"buttons\">";

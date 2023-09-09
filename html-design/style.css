@@ -47,6 +47,25 @@ body {
 	vertical-align: middle;
 }
 
+.entry .value textarea {
+	border: none;
+	width: calc(100% - 1.2em);
+	height: 7em;
+	font-size: 3vw;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: normal;	
+	vertical-align: middle;
+}
+
+.textarea {
+	height: 12em !important;
+}
+
+.textarea div {
+	height: 7em !important;
+}
+
 .buttons button {
 	font-size: 3vw;
 	height: 2em;
