@@ -31,8 +31,7 @@ jobs:
 
       - name: Install PlatformIO
         run: |
-          python -m pip install --upgrade pip
-          pip install --upgrade platformio
+          python -m pip install -U platformio
 
       - name: Set Version in library.json
         uses: jossef/action-set-json-field@v2.1
