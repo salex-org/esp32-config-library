@@ -18,6 +18,7 @@ namespace esp32config
 	enum EntryType
 	{
 		TEXT,
+		TEXTAREA,
 		PASSWORD,
 		INTEGER
 	};
@@ -63,6 +64,7 @@ namespace esp32config
 		std::string getKey();
 		std::string getTitle();
 		std::string getValue();
+		EntryType getType();
 	};
 
 	class Namespace

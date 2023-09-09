@@ -75,3 +75,7 @@ std::string esp32config::Entry::getValue() {
 std::string esp32config::Entry::getKey() {
 	return this->key;
 }
+
+esp32config::EntryType esp32config::Entry::getType() {
+	return this->type;
+}
