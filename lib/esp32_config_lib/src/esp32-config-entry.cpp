@@ -19,6 +19,7 @@ void esp32config::Entry::load(const nvs_handle_t& nvs)
 		}
         break;
     case TEXT:
+	case TEXTAREA:
     case PASSWORD:
 		size_t required_size;
 		if(nvs_get_str(nvs, this->key.c_str(), NULL, &required_size) == ESP_OK) {
@@ -41,6 +42,7 @@ void esp32config::Entry::save(const nvs_handle_t& nvs)
 		nvs_set_i32(nvs, this->key.c_str(), std::strtol(this->value.c_str(), NULL, 10));
         break;
     case TEXT:
+	case TEXTAREA:
     case PASSWORD:
 		nvs_set_str(nvs, this->key.c_str(), this->value.c_str());
         break;
